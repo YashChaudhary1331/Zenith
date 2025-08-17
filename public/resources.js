@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'resource-card';
             card.dataset.type = resource.type;
 
+            // FIX: Use the full Cloudinary URL for downloads, or the link URL
             const actionButton = resource.type === 'file'
-                ? `<a href="http://localhost:5000${resource.filePath}" download="${resource.fileName}" class="btn-edit">Download</a>`
+                ? `<a href="${resource.filePath}" download="${resource.fileName}" target="_blank" class="btn-edit">Download</a>`
                 : `<a href="${resource.url}" target="_blank" class="btn-edit">Open Link</a>`;
 
             card.innerHTML = `
@@ -51,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch(`http://localhost:5000/api/resources?classId=${currentClassId}`);
+            // FIX: Use relative URL
+            const response = await fetch(`/api/resources?classId=${currentClassId}`);
             const resources = await response.json();
             displayResources(resources);
         } catch (error) { console.error('Error fetching resources:', error); }
@@ -59,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addResource = async (formData) => {
         try {
-            const response = await fetch('http://localhost:5000/api/resources', {
+            // FIX: Use relative URL
+            const response = await fetch('/api/resources', {
                 method: 'POST',
                 body: formData,
             });
@@ -72,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteResource = async (id) => {
         if (!confirm('Are you sure you want to delete this resource?')) return;
         try {
-            await fetch(`http://localhost:5000/api/resources/${id}`, { method: 'DELETE' });
+            // FIX: Use relative URL
+            await fetch(`/api/resources/${id}`, { method: 'DELETE' });
             fetchResources();
         } catch (error) { console.error('Error deleting resource:', error); }
     };
@@ -149,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Load ---
     const populateClassroomDropdown = async () => {
         try {
+            // FIX: Use relative URL
             const response = await fetch('/api/classrooms');
             const classrooms = await response.json();
             classSelect.innerHTML = '<option value="">-- Select a Class --</option>';
