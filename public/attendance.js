@@ -6,7 +6,7 @@ const attendanceContainer = document.getElementById('attendance-list-container')
 // --- Functions ---
 const populateClassroomDropdown = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/classrooms');
+        const response = await fetch('/api/classrooms');
         if (!response.ok) throw new Error('Failed to fetch classrooms');
         const classrooms = await response.json();
         classSelect.innerHTML = '<option value="">-- Select a Class --</option>';

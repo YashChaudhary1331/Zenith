@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- HELPER & API FUNCTIONS (Defined first) ---
     const populateClassroomDropdown = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/classrooms');
+            const response = await fetch('/api/classrooms');
             const classrooms = await response.json();
             classSelect.innerHTML = '<option value="">-- Select a Class --</option>';
             classrooms.forEach(c => {

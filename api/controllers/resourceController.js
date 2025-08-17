@@ -1,17 +1,20 @@
 // In controllers/resourceController.js
-const fs = require('fs');
-const path = require('path');
 const Resource = require('../models/resourceModel');
+const { cloudinary } = require('../config/cloudinaryConfig');
+
+// Helper to extract public_id from Cloudinary URL
+const getPublicId = (url) => {
+    // For resources, the format is zenith/resources/public_id
+    return url.split('/').slice(-2).join('/').split('.')[0];
+};
 
 // @desc    Get resources for a specific class
-// @route   GET /api/resources
 const getResources = async (req, res) => {
     const resources = await Resource.find({ classroomId: req.query.classId }).sort({ createdAt: -1 });
     res.status(200).json(resources);
 };
 
 // @desc    Create a new resource (file or link)
-// @route   POST /api/resources
 const createResource = async (req, res) => {
     const { title, description, type, url, classroomId } = req.body;
 
@@ -26,7 +29,7 @@ const createResource = async (req, res) => {
         resourceData.url = url;
     } else if (type === 'file') {
         if (!req.file) return res.status(400).json({ message: 'A file is required for file type.' });
-        resourceData.filePath = `/uploads/resources/${req.file.filename}`;
+        resourceData.filePath = req.file.path; // Save the Cloudinary URL
         resourceData.fileName = req.file.originalname;
     } else {
         return res.status(400).json({ message: 'Invalid resource type.' });
@@ -37,19 +40,17 @@ const createResource = async (req, res) => {
 };
 
 // @desc    Delete a resource
-// @route   DELETE /api/resources/:id
 const deleteResource = async (req, res) => {
     const resource = await Resource.findById(req.params.id);
     if (!resource) {
         return res.status(404).json({ message: 'Resource not found' });
     }
 
-    // If the resource is a file, delete it from the server's storage
+    // If the resource is a file, delete it from Cloudinary
     if (resource.type === 'file' && resource.filePath) {
-        const fullPath = path.join(__dirname, '..', resource.filePath);
-        fs.unlink(fullPath, (err) => {
-            if (err) console.error("Failed to delete resource file:", err);
-        });
+        const publicId = getPublicId(resource.filePath);
+        // We tell Cloudinary it's a 'raw' file type to delete non-image files
+        cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
     }
 
     await Resource.findByIdAndDelete(req.params.id);
