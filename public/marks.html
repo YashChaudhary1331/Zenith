@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link ">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link active">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Assignments & Marks</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+            </header>
+            <div class="class-selector-container">
+                <label for="marks-class-select">Select a Classroom to Manage Assignments</label>
+                <select id="marks-class-select"></select>
+            </div>
+
+            <div class="assignment-creator">
+                <h3>Create New Assignment</h3>
+                <form id="assignment-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assignment-name" class="assignment-name-text">Assignment Name</label>
+                            <input type="text" id="assignment-name" placeholder="e.g., Chapter 5 Quiz" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject-text" class="subject-text">Subject</label>
+                            <input type="text" id="subject-text" placeholder="e.g., Science" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="max-score">Max Score</label>
+                            <input type="number" id="max-score" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignment-due-date">Due Date</label>
+                            <input type="date" id="assignment-due-date">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Assignment</button>
+                </form>
+            </div>
+
+            <hr class="section-divider">
+
+            <div id="subject-marks-section" style="display: none;">
+                <div class="assignment-creator">
+                    <h3>Give Marks by Subject</h3>
+                    <div class="form-group">
+                        <label for="subject-marks-select">Select a Subject</label>
+                        <select id="subject-marks-select"></select>
+                    </div>
+                </div>
+                <div id="subject-gradebook-container">
+                </div>
+            </div>
+
+            <hr class="section-divider">
+            <h2 id="assignment-list-header">Saved Assignments</h2>
+            <div id="assignment-list">
+            </div>
+
+            <div id="gradebook-container">
+            </div>
+        </main>
+    </div>
+
+    <script src="theme.js"></script>
+    <script src="marks.js"></script>
+</body>
+
+</html>

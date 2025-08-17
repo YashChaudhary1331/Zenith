@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Report Designer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link active">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Report Card Designer</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+            </header>
+
+            <div class="designer-grid">
+                <div class="designer-form">
+                    <p class="designer-intro">
+                        Select the options below to generate a new design. Your choices will be saved and used for all
+                        future report cards.
+                    </p>
+                    <form id="design-config-form">
+                        <div class="config-card">
+                            <h4>Header</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="school-name">School Name</label>
+                                    <input type="text" id="school-name" value="Zenith School">
+                                </div>
+                                <div class="form-group">
+                                    <label for="academic-year">Academic Year</label>
+                                    <input type="text" id="academic-year" value="2024-2025">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="school-logo">School Logo (Optional)</label>
+                                <input type="file" id="school-logo" accept="image/png, image/jpeg">
+                                <img id="logo-preview" src="#" alt="Logo Preview"
+                                    style="max-height: 50px; margin-top: 10px; display: none; border-radius: 6px;">
+                            </div>
+                        </div>
+
+                        <div class="config-card">
+                            <h4>Visual Style</h4>
+                            <div class="form-group">
+                                <label>Color Theme</label>
+                                <div class="custom-radio-group">
+                                    <label><input type="radio" name="theme" value="blue"
+                                            checked><span>Blue</span></label>
+                                    <label><input type="radio" name="theme" value="green"><span>Green</span></label>
+                                    <label><input type="radio" name="theme" value="grey"><span>Greyscale</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Font Style</label>
+                                <div class="custom-radio-group">
+                                    <label><input type="radio" name="font" value="sans-serif"
+                                            checked><span>Modern</span></label>
+                                    <label><input type="radio" name="font"
+                                            value="serif"><span>Traditional</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-card">
+                            <h4>Grading Scale</h4>
+                            <div class="grading-scale-grid">
+                                <div class="form-group"><label>A+ ≥ <input type="number" class="grade-input"
+                                            id="grade-aplus" value="90">%</label></div>
+                                <div class="form-group"><label>A ≥ <input type="number" class="grade-input" id="grade-a"
+                                            value="80">%</label></div>
+                                <div class="form-group"><label>B ≥ <input type="number" class="grade-input" id="grade-b"
+                                            value="70">%</label></div>
+                                <div class="form-group"><label>C ≥ <input type="number" class="grade-input" id="grade-c"
+                                            value="60">%</label></div>
+                                <div class="form-group"><label>D ≥ <input type="number" class="grade-input" id="grade-d"
+                                            value="50">%</label></div>
+                            </div>
+                        </div>
+
+                        <div class="config-card">
+                            <h4>Content & Data</h4>
+                            <div class="custom-checkbox-grid">
+                                <label class="custom-checkbox"><input type="checkbox" name="content" value="showDob"
+                                        checked><span>Student's Date of Birth</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="showAddress"><span>Student's Address</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="showParentInfo"><span>Parent/Guardian Names</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="showParentContact"><span>Parent/Guardian Contact</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="showPercentage" checked><span>'Percentage' Column</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content" value="showGrade"
+                                        checked><span>'Grade' Column</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content" value="attendance"
+                                        checked><span>Attendance Summary</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="observations" checked><span>Teacher's Observations</span></label>
+                                <label class="custom-checkbox"><input type="checkbox" name="content"
+                                        value="signature"><span>Parent's Signature Line</span></label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Design</button>
+                        <p id="config-status" style="margin-top: 15px; font-weight: 600;"></p>
+                    </form>
+                </div>
+
+                <div class="designer-preview">
+                    <iframe id="preview-frame"></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="theme.js"></script>
+    <script src="report-designer.js"></script>
+</body>
+
+</html>

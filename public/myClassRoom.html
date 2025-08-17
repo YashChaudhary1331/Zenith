@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith - My Classroom</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="./index.html" class="nav-link ">Dashboard</a>
+        <a href="myClassRoom.html" class="nav-link active">My Classroom</a>
+        <a href="./students.html" class="nav-link">Students</a>
+        <a href="subjects.html" class="nav-link ">Subjects</a>
+        <a href="./marks.html" class="nav-link">Marks</a>
+        <a href="attendance.html" class="nav-link">Attendance</a>
+        <a href="activities.html" class="nav-link">Activities</a>
+        <a href="lessons.html" class="nav-link">Lesson Plans</a>
+        <a href="resources.html" class="nav-link">Resource Library</a>
+        <a href="report-designer.html" class="nav-link">Report Designer</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <h1>My Classrooms</h1>
+        <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+      </header>
+
+      <div class="assignment-creator">
+        <h3>Create New Classroom</h3>
+        <form id="classroom-form">
+          <div class="form-group">
+            <label for="classroom-name">Classroom Name</label>
+            <input type="text" id="classroom-name" name="classroom-name" placeholder="e.g., Grade 10 - Section B"
+              required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Classroom</button>
+        </form>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2>Existing Classrooms</h2>
+      <div id="classroom-list">
+      </div>
+    </main>
+  </div>
+  <script src="theme.js"></script>
+  <script src="myClassRoom.js"></script>
+</body>
+
+</html>

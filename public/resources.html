@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Resource Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link active">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Resource Library</h1>
+                
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+                <button id="add-resource-btn" class="btn btn-primary">Add New Resource</button>
+            </header>
+
+            <div class="class-selector-container">
+                <label for="resource-class-select">Select a Classroom to View Resources</label>
+                <select id="resource-class-select"></select>
+            </div>
+
+            <div id="resource-list" class="resource-list-container">
+                </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="resource-modal">
+        <div class="modal-content">
+            <h2 id="resource-modal-title">Add New Resource</h2>
+            <form id="resource-form">
+                <div class="form-group">
+                    <label>Resource Type</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="resourceType" value="file" checked> File</label>
+                        <label><input type="radio" name="resourceType" value="link"> Link</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="resource-title">Title</label>
+                    <input type="text" id="resource-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="resource-description">Description</label>
+                    <textarea id="resource-description" rows="3"></textarea>
+                </div>
+
+                <div id="file-input-container" class="form-group">
+                    <label for="resource-file">Upload File</label>
+                    <input type="file" id="resource-file">
+                </div>
+
+                <div id="link-input-container" class="form-group" style="display: none;">
+                    <label for="resource-url">URL</label>
+                    <input type="url" id="resource-url" placeholder="https://example.com">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-resource-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Resource</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="theme.js"></script>
+    <script src="resources.js"></script>
+</body>
+</html>

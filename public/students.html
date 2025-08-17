@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link active">Students</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Students</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+                <button id="add-student-btn" class="btn btn-primary">Add Student</button>
+            </header>
+
+            <div id="student-list-grouped">
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="add-student-modal">
+        <div class="modal-content">
+            <h2>Add New Student</h2>
+            <form id="add-student-form">
+                <div class="form-group">
+                    <label for="classroom-select">Add to Classroom</label>
+                    <select id="classroom-select" name="classroomId" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="photograph">Student Photograph</label>
+                    <input type="file" id="photograph" name="photograph" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="date-of-birth">Date of Birth</label>
+                    <input type="date" id="date-of-birth" name="dateOfBirth">
+                </div>
+
+                <hr style="margin: 20px 0;">
+                <h4>Parent/Guardian Information</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="father-name">Father's Name</label>
+                        <input type="text" id="father-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="father-contact">Father's Contact</label>
+                        <input type="text" id="father-contact">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mother-name">Mother's Name</label>
+                        <input type="text" id="mother-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="mother-contact">Mother's Contact</label>
+                        <input type="text" id="mother-contact">
+                    </div>
+                </div>
+
+                <hr style="margin: 20px 0;">
+                <div class="form-group">
+                    <label for="teacher-observation">Teacher's Observation</label>
+                    <textarea id="teacher-observation" name="teacherObservation" rows="4"
+                        placeholder="Enter notes on student's progress, behavior, etc."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-student-modal">
+        <div class="modal-content">
+            <h2>Edit Student</h2>
+            <form id="edit-student-form">
+                <input type="hidden" id="edit-student-id">
+                <div class="form-group">
+                    <label for="edit-name">Student Name</label>
+                    <input type="text" id="edit-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-photograph">New Photograph (optional)</label>
+                    <input type="file" id="edit-photograph" name="photograph" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="edit-address">Address</label>
+                    <input type="text" id="edit-address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="edit-date-of-birth">Date of Birth</label>
+                    <input type="date" id="edit-date-of-birth" name="dateOfBirth">
+                </div>
+
+                <hr style="margin: 20px 0;">
+                <h4>Parent/Guardian Information</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-father-name">Father's Name</label>
+                        <input type="text" id="edit-father-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-father-contact">Father's Contact</label>
+                        <input type="text" id="edit-father-contact">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-mother-name">Mother's Name</label>
+                        <input type="text" id="edit-mother-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-mother-contact">Mother's Contact</label>
+                        <input type="text" id="edit-mother-contact">
+                    </div>
+                </div>
+
+                <hr style="margin: 20px 0;">
+                <div class="form-group">
+                    <label for="edit-teacher-observation">Teacher's Observation</label>
+                    <textarea id="edit-teacher-observation" name="teacherObservation" rows="4"
+                        placeholder="Enter notes on student's progress, behavior, etc."></textarea>
+                </div>
+                <hr style="margin: 20px 0;">
+                <div class="form-group">
+                    <label>Award Badges</label>
+                    <div id="badge-checklist-container">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="access-codes-modal">
+        <div class="modal-content">
+            <h2 id="access-modal-title">Access Codes</h2>
+            <div class="access-code-section">
+                <h4>Student Access Code</h4>
+                <div class="code-display-wrapper">
+                    <p id="student-code-display"></p>
+                    <button class="btn-copy" id="copy-student-code-btn">Copy</button>
+                </div>
+            </div>
+            <div class="access-code-section">
+                <h4>Parent Access Code</h4>
+                <div class="code-display-wrapper">
+                    <p id="parent-code-display"></p>
+                    <button class="btn-copy" id="copy-parent-code-btn">Copy</button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" id="generate-codes-btn" style="display: none;">Generate New
+                    Codes</button>
+                <button type="button" class="btn btn-secondary" id="close-access-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="ai-observation-modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="ai-modal-title">Generate AI Observation</h2>
+            <div class="spinner-container" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing student data...</p>
+            </div>
+            <p class="ai-instructions">Generate a summary based on the student's marks and attendance. Review and edit
+                the text before saving.</p>
+            <div class="form-group">
+                <textarea id="ai-observation-textarea" rows="6"></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" id="copy-observation-btn">Copy Text</button>
+                <button class="btn btn-secondary" id="close-ai-modal-btn">Close</button>
+                <button class="btn btn-primary" id="generate-observation-btn">Generate</button>
+            </div>
+        </div>
+    </div>
+
+<div class="modal-overlay" id="message-modal" style="display: none;">
+    <div class="modal-content">
+        <h2 id="message-modal-title">Conversation</h2>
+        <div id="message-display-area" class="message-container">
+            </div>
+        <form id="message-form">
+            <div class="form-group">
+                <textarea id="message-input" placeholder="Type your message..." rows="3"></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="close-message-modal-btn">Close</button>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script src="theme.js"></script>
+    <script src="students.js"></script>
+</body>
+
+</html>

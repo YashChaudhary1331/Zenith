@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Attendance</title> <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./images/logo.png">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link ">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="./attendance.html" class="nav-link active">Attendance</a> 
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Daily Attendance</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+            </header>
+
+            <div class="attendance-controls">
+                <div class="form-group">
+                    <label for="attendance-class-select">Select a Classroom</label>
+                    <select id="attendance-class-select"></select>
+                </div>
+                <div class="form-group">
+                    <label for="attendance-date">Select Date</label>
+                    <input type="date" id="attendance-date">
+                </div>
+            </div>
+
+            <div id="attendance-list-container">
+                </div>
+        </main>
+    </div>
+    <script src="theme.js"></script>
+    <script src="attendance.js"></script> </body>
+</html>

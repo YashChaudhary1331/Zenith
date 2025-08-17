@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Student-Parent Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="portal-body">
+
+    <header class="portal-header">
+        <div class="portal-welcome">
+            <img src="./images/logo.png" alt="Logo" class="portal-logo">
+            <h1 id="welcome-heading">Welcome</h1>
+        </div>
+        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+    </header>
+
+    <main class="portal-main-content">
+        <div class="stat-cards-container" id="portal-stats">
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="portal-section">
+            <h2>Recent Grades</h2>
+            <div id="grades-container">
+                <table class="marks-table">
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Subject</th>
+                            <th>Your Score</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grades-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="portal-section">
+            <h2>Classroom Activities</h2>
+            <div id="activity-list-portal" class="activity-list">
+            </div>
+        </div>
+
+        <div class="portal-section">
+            <h2>Conversation with Teacher</h2>
+            <div id="message-display-area" class="message-container">
+            </div>
+            <form id="message-form" class="portal-message-form">
+                <div class="form-group">
+                    <textarea id="message-input" placeholder="Type your message..." rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="portal.js"></script>
+</body>
+
+</html>

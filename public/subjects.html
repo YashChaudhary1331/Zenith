@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Subjects</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./images/logo.png">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link active">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Manage Subjects</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+            </header>
+
+            <div class="assignment-creator">
+                <h3>Add New Subject</h3>
+                <form id="subject-form">
+                    <div class="form-group">
+                        <label for="subject-name">Subject Name</label>
+                        <input type="text" id="subject-name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Subject</button>
+                </form>
+            </div>
+
+            <hr class="section-divider">
+
+            <h2>Existing Subjects</h2>
+            <div id="subject-list">
+            </div>
+        </main>
+    </div>
+    <script src="theme.js"></script>
+    <script src="subjects.js"></script>
+</body>
+</html>

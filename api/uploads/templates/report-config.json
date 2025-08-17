@@ -1,0 +1,35 @@
+{
+  "schoolName": "Zenith School",
+  "academicYear": "2024-2025",
+  "theme": "blue",
+  "font": "sans-serif",
+  "content": [
+    "showDob",
+    "showPercentage",
+    "showGrade",
+    "attendance",
+    "observations"
+  ],
+  "gradingScale": [
+    {
+      "grade": "A+",
+      "min": "90"
+    },
+    {
+      "grade": "A",
+      "min": "80"
+    },
+    {
+      "grade": "B",
+      "min": "70"
+    },
+    {
+      "grade": "C",
+      "min": "60"
+    },
+    {
+      "grade": "D",
+      "min": "50"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link active">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link ">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="./attendance.html" class="nav-link">Attendance</a>
+                <a href="./activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+    <header class="main-header">
+        <h1>Dashboard</h1>
+        <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+        <div class="class-selector-container" style="margin-bottom: 0;">
+            <select id="dashboard-class-select"></select>
+        </div>
+    </header>
+
+    <div class="stat-cards-container" id="stat-cards">
+        </div>
+
+    <hr class="section-divider">
+
+    <div class="dashboard-grid" id="dashboard-grid">
+                <div id="widget-high-performers" class="dashboard-widget widget-high-performers">
+                    <h2 class="drag-handle">⭐ High Performers</h2>
+                    <div id="high-performers-list" class="widget-list"></div>
+                </div>
+
+                <div id="widget-low-performers" class="dashboard-widget widget-low-performers">
+                    <h2 class="drag-handle">⚠️ Low Performance</h2>
+                    <div id="low-performance-list" class="widget-list"></div>
+                </div>
+
+                <div id="widget-birthdays" class="dashboard-widget widget-birthdays">
+                    <h2 class="drag-handle">🎂 Upcoming Birthdays</h2>
+                    <div id="upcoming-birthdays-list" class="widget-list"></div>
+                </div>
+
+                <div id="widget-attendance" class="dashboard-widget widget-attendance-chart">
+                    <h2 class="drag-handle">📊 Today's Attendance</h2>
+                    <div class="chart-container">
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+                </div>
+                
+                <div id="widget-performance-trend" class="dashboard-widget widget-performance-trend">
+                    <h2 class="drag-handle">📈 Class Performance Trend</h2>
+                    <div class="chart-container">
+                        <canvas id="performanceTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="widget-deadlines" class="dashboard-widget widget-deadlines">
+                    <h2 class="drag-handle">🗓️ Upcoming Deadlines</h2>
+                    <div id="upcoming-deadlines-list" class="widget-list"></div>
+                </div>
+
+                <div id="widget-recent-activities" class="dashboard-widget widget-recent-activities">
+                    <h2 class="drag-handle">🎨 Recent Activities</h2>
+                    <div id="recent-activities-list" class="widget-list"></div>
+                </div>
+
+                <div id="widget-notes" class="dashboard-widget widget-notes">
+                    <h2 class="drag-handle">📝 Quick Notes</h2>
+                    <textarea id="quick-notes-pad"></textarea>
+                </div>
+            </div>
+</main>
+    </div>
+     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="theme.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

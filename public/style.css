@@ -1,0 +1,1739 @@
+/* --- MODERN UI REDESIGN FOR ZENITH --- */
+
+/* 1. FONT IMPORT & ROOT VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* A more modern, softer, and cohesive color palette */
+  --primary-brand: #4A90E2;
+  /* A brighter, more engaging blue */
+  --primary-dark: #3B73B5;
+  --sidebar-bg: #1E2A38;
+  /* A deep, modern navy */
+  --main-bg: #F7F9FC;
+  /* A clean, very light grey-blue */
+  --card-bg: #FFFFFF;
+  --text-primary: #121F2D;
+  /* A softer black */
+  --text-secondary: #6A7889;
+  --border-color: #E8EDF3;
+  --success: #34D399;
+  /* A vibrant green */
+  --warning: #FBBF24;
+  /* A warm amber */
+  --danger: #F87171;
+  /* A soft, modern red */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
+  --border-radius: 12px;
+
+  /* Extras for chips/badges and muted surfaces */
+  --surface-muted: #F3F6FA;
+  --chip-bg: #ECF3FF;
+  --chip-text: #2E69C0;
+}
+/* In style.css */
+
+/* This new block defines the colors for dark mode */
+html.dark {
+  --primary-brand: #5FA8FF; /* A slightly brighter blue for dark backgrounds */
+  --primary-dark: #4A90E2;
+  --sidebar-bg: #16202C;
+  --main-bg: #121F2D; /* A deep, modern navy */
+  --card-bg: #1E2A38; /* The old sidebar color, great for cards */
+  --text-primary: #F7F9FC; /* The old light background color */
+  --text-secondary: #A0B0C4; /* A lighter, softer grey for dark backgrounds */
+  --border-color: #2C3A4B; /* A subtle dark border */
+  --surface-muted: #253343;
+  --chip-bg: #2E69C0;
+  --chip-text: #ECF3FF;
+}
+
+/* A small tweak for modal backgrounds in dark mode */
+html.dark .modal-content {
+    background: rgba(30, 42, 56, 0.75); /* Darker glassmorphism */
+    border: 1px solid rgba(44, 58, 75, 0.6);
+}
+
+/* 2. GENERAL STYLES & RESETS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--main-bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 3. SIDEBAR */
+.sidebar {
+  width: 260px;
+  background-color: var(--sidebar-bg);
+  color: #E8EDF3;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header .logo {
+  width: 100px;
+  margin: 0 auto 40px auto;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.2));
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* For future icons */
+  color: #E8EDF3;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+  background-color: var(--primary-brand);
+  color: var(--card-bg);
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+
+/* 4. MAIN CONTENT AREA */
+.main-content {
+  flex-grow: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.section-divider {
+  margin: 40px 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 5. BUTTONS & FORMS */
+.btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary {
+  background-color: var(--primary-brand);
+  color: var(--card-bg);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: #e8edf3;
+  color: black;
+  box-shadow: none;
+  margin-top: 20px;
+}
+
+.btn-secondary:hover {
+  background-color: #dde4ed;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-delete,
+.btn-delete-assignment,
+.btn-delete-activity {
+  background-color: var(--danger);
+  color: var(--card-bg);
+}
+
+
+.btn-delete{
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+.btn-delete:hover,
+.btn-delete-assignment:hover,
+.btn-delete-activity:hover {
+  background-color: #f75a5a;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px  33px 12px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #F7F9FC;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-brand);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  background-color: var(--card-bg);
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .form-group {
+  flex-grow: 1;
+}
+
+/* 6. MODALS */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(24, 42, 62, 0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  padding: 35px;
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 550px;
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.3s ease-out;
+  max-height: 90vh; /* Set a maximum height relative to the screen */
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content h2 {
+  margin-bottom: 25px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* 7. DASHBOARD */
+.stat-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card .icon {
+  font-size: 2rem;
+  padding: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card .text-content h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stat-card .text-content .stat-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.dashboard-widget {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-widget h2 {
+  margin: 0 0 15px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.widget-performance-trend {
+  grid-column: span 2;
+}
+
+.widget-recent-activities {
+  grid-column: span 2;
+}
+
+.widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.student-attention-list-item,
+.activity-feed-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.student-attention-list-item:hover,
+.activity-feed-item:hover {
+  background-color: var(--main-bg);
+}
+
+.student-attention-list-item img,
+.activity-feed-item img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  background-color: black;
+}
+
+/* 8. STUDENT & CLASSROOM CARDS */
+.student-list,
+#classroom-list,
+#assignment-list,
+#activity-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+#classroom-list{
+  margin-top: 20px;
+}
+
+.classroom-heading{
+  margin: 20px 0px;
+}
+
+.class-end-hr{
+  margin: 30px 40px;
+}
+
+/* Classroom card shell */
+.classroom-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 20px 25px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  position: relative;
+  /* allows header action button anchoring */
+}
+
+.classroom-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* Classroom title */
+.classroom-card .classroom-title,
+.classroom-card>h3,
+.classroom-card>h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Pin the Show/Hide Students button neatly to top-right inside each classroom card */
+.classroom-card>.btn,
+.classroom-card>.btn-secondary,
+.classroom-card>.btn-primary {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  margin: 0 !important;
+}
+
+/* Optional subtitle or meta below the title */
+.classroom-card .classroom-meta {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+/* Base student card */
+.student-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.student-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid black;
+  background-color: black;
+  flex-shrink: 0;
+}
+
+.student-card-details h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.student-card-small {
+  padding: 20px 0px;
+}
+
+.parent-info {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.card-actions .btn-edit,
+.card-actions .btn-delete {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+
+.btn-edit{
+      padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    line-height: 1.5;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+
+/* 9. ASSIGNMENTS & ACTIVITIES */
+.assignment-creator,
+.class-selector-container,
+.attendance-controls {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 30px;
+}
+
+.assignment-card,
+.classroom-card
+
+/* reused above */
+  {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.activity-card {
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.activity-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.activity-card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-card-content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.activity-card-content p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.activity-card-content .date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.activity-card-content .btn-delete-activity {
+  margin-top: 15px;
+  align-self: flex-start;
+}
+
+/* 10. TABLES (MARKS & ATTENDANCE) */
+.marks-table,
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.marks-table th,
+.attendance-table th {
+  background-color: #F7F9FC;
+  padding: 15px;
+  text-align: left;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sidebar-bg);
+}
+
+
+.assignment-name-text{
+  margin-top: 20px;
+}
+
+.subject-text{
+  margin-top: 20px;
+}
+
+.marks-table td,
+.attendance-table td {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.marks-table tbody tr:last-child td,
+.attendance-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.attendance-status-buttons button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  /* background-color: var(--card-bg); */
+  transition: all 0.2s ease;
+}
+
+.attendance-status-buttons button.active {
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.btn-present.active {
+  background-color: var(--success);
+}
+
+.btn-absent.active {
+  background-color: var(--danger);
+}
+
+.btn-late.active {
+  background-color: var(--warning);
+}
+
+/* 11. RESPONSIVE DESIGN */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .widget-performance-trend,
+  .widget-recent-activities {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    /* Simplification for this example, a real app would have a toggle button */
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .main-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Make student tiles go single-column on small screens */
+  .student-list-expanded {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --- ENHANCEMENTS: GRADIENTS, ANIMATIONS, GLASSMORPHISM --- */
+
+/* Gradient Brand Look */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-brand), #6BB5FF);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark), #4A90E2);
+}
+
+.main-header h1 {
+  background: linear-gradient(90deg, var(--primary-brand), #6BB5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card Hover Glow */
+.stat-card:hover,
+.student-card:hover,
+.assignment-card:hover,
+.activity-card:hover {
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+  transform: translateY(-6px) scale(1.02);
+}
+
+#assignment-list-header{
+  margin-bottom: 15px;
+}
+
+.assignment-head{
+  padding-top: 7px;
+}
+
+/* Glassmorphism for modals */
+.modal-content {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Animated Icons */
+.stat-card .icon:hover {
+  animation: pulse 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* Entry Animations */
+.dashboard-widget,
+.student-card,
+.stat-card,
+.classroom-card {
+  animation: fadeUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- FIXES FOR LAYOUT & ORGANIZATION --- */
+
+/* 1. Organize student list view (base grid) */
+.student-list-expanded {
+  /* A tidy responsive grid for student tiles inside a classroom card */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 6px;
+  padding: 6px 0;
+}
+
+/* 2. Individual student tile */
+.student-list-expanded .student-entry,
+.classroom-card .student-entry {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.student-list-expanded .student-entry:hover,
+.classroom-card .student-entry:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--surface-muted);
+}
+
+/* Avatar */
+.student-list-expanded .student-avatar,
+.classroom-card .student-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* border: 2px solid var(--primary-brand); */
+  /* background: linear-gradient(135deg, #E9F2FF, #FFFFFF); */
+  background-color: #121F2D;
+}
+
+/* Info block */
+.student-list-expanded .student-info,
+.classroom-card .student-info {
+  min-width: 0;
+  /* enables text overflow handling */
+}
+
+.student-list-expanded .student-info strong,
+.classroom-card .student-info strong {
+  display: block;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Secondary line (address/parent/etc.) clamped to 2 lines for neatness */
+.student-list-expanded .student-info span,
+.classroom-card .student-info span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.25rem;
+}
+
+/* Optional chips for roll no, section, etc. (if present) */
+.student-list-expanded .student-meta,
+.classroom-card .student-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.student-list-expanded .chip,
+.classroom-card .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* 3. Classroom header alignment: title left, toggle right */
+.classroom-card .students-header,
+.classroom-card .card-header,
+.classroom-card .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+/* Ensure any plain list inside a classroom becomes tidy tiles */
+.classroom-card ul.student-list,
+.classroom-card ol.student-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.classroom-card ul.student-list>li,
+.classroom-card ol.student-list>li {
+  /* Same as .student-entry */
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 4. Better spacing in activity feed header */
+.activity-feed-header {
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.activity-class{
+  margin-bottom: 15px;
+}
+
+/* 5. Consistent padding for classroom and assignments containers */
+.class-selector-container,
+.assignment-creator {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.class-selector-container label,
+.assignment-creator label {
+  font-weight: 600;
+}
+
+/* 6. Utility: subtle divider within classroom card when needed */
+.classroom-card .divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 10px 0;
+  border-radius: 1px;
+}
+
+/* 7. Empty state for classrooms without students */
+.classroom-card .students-empty {
+  background: #fff;
+  border: 1px dashed var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* --- CLEANED & CONSOLIDATED ORGANIZED STUDENT LIST VIEW --- */
+/* (This replaces earlier duplicates and ensures consistent layout everywhere) */
+.classroom-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-list-expanded {
+  /* consolidated styles (kept above) */
+}
+
+/* 2. Style select dropdowns */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--chip-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 35px 10px 12px;
+  font-size: 1rem;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus {
+  border-color: var(--primary-brand);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  outline: none;
+}
+
+/* 3. Improve alignment for assignment action buttons */
+.assignment-card .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.assignment-card .btn {
+  min-width: 100px;
+  text-align: center;
+}
+
+/* --- SMALL POLISHES FOR "EXISTING CLASSROOMS" HEADING --- */
+.existing-classrooms-title,
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+/* --- OPTIONAL: hover elevation for organized lists --- */
+.student-list-expanded .student-entry:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* In style.css */
+
+.access-code-section {
+  margin: 25px 0;
+}
+.access-code-section h4 {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+.code-display-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--main-bg);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+.code-display-wrapper p {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-brand);
+}
+.btn-copy {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+/* In style.css */
+
+.login-page-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--main-bg);
+}
+
+.login-container {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-logo {
+    width: 80px;
+    margin-bottom: 20px;
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.error-text {
+    color: var(--danger);
+    margin-top: 15px;
+    height: 20px;
+    font-weight: 500;
+}
+
+/* In style.css */
+
+.portal-body {
+    background-color: var(--main-bg);
+}
+
+.portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #1E2A38;
+    color: white;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.portal-welcome {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.portal-logo {
+    width: 80px;
+    height: 62px;
+    background-color: #1E2A38;
+}
+
+.portal-main-content {
+    padding: 30px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portal-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    margin-top: 25px;
+}
+
+#activity-list-portal .activity-card .btn {
+    display: none; /* Hide delete button for parents/students */
+}
+
+/* --- FINAL UNIFIED STUDENT CARD ACTIONS --- */
+
+/* Main container for the actions area (date and buttons) */
+.student-card .card-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 10px; /* Adds space between the date and the button group */
+}
+
+/* --- STUDENT CARD OVERFLOW FIX --- */
+
+/* This tells the details container to shrink correctly */
+.student-card-details {
+    min-width: 0;
+}
+
+/* This allows the long address text to wrap properly */
+.student-card-details > p {
+    word-break: break-word;
+}
+
+/* Style for the 'Created: ...' text */
+.student-card .card-actions p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+    flex-shrink: 1; /* Allows this text to shrink if needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' if text is too long */
+}
+
+/* Container for just the button group */
+.student-card .card-actions > div {
+    display: flex;
+    gap: 6px; /* A smaller gap for more buttons */
+    flex-shrink: 0; /* Prevents the button group from shrinking */
+    flex-wrap: wrap; /* This is the main fix: allows buttons to wrap */
+    justify-content: flex-end;
+}
+
+
+/* Base style for ALL buttons in this section */
+.student-card .card-actions button {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap; /* Ensures button text doesn't wrap */
+    margin-top: 4px;
+}
+
+/* Specific styles and colors for each button type */
+.student-card .btn-edit { background-color: var(--primary-brand); color: white; }
+.student-card .btn-delete { background-color: var(--danger); color: white; }
+.student-card .btn-generate-report { background-color: var(--success); color: white; }
+.student-card .btn-manage-access { background-color: var(--surface-muted); color: var(--text-secondary); border-color: var(--border-color); }
+
+/* Consistent hover effects */
+.student-card .card-actions button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+.student-card .btn-edit:hover { background-color: var(--primary-dark); }
+.student-card .btn-delete:hover { background-color: #e55353; }
+.student-card .btn-generate-report:hover { background-color: #2aaa7a; }
+.student-card .btn-manage-access:hover { background-color: var(--border-color); }
+/* In style.css */
+
+/* --- AI OBSERVATION FEATURE STYLES --- */
+
+/* Style for the new AI button on the card */
+.student-card .btn-generate-observation {
+    background-color: #9b59b6; /* A nice purple */
+    color: white;
+}
+.student-card .btn-generate-observation:hover {
+    background-color: #8e44ad;
+    transform: translateY(-1px);
+}
+
+.ai-instructions {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Loading Spinner Styles */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    color: var(--text-secondary);
+}
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-brand);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* In style.css */
+
+/* --- LESSON PLAN STYLES --- */
+.lesson-list-container {
+    margin-top: 30px;
+    display: grid;
+    gap: 20px;
+}
+
+.lesson-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--primary-brand);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lesson-card-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.lesson-card-info p {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.lesson-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* In style.css */
+
+/* --- RESOURCE LIBRARY STYLES --- */
+.resource-list-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.resource-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Different border color for files vs links */
+.resource-card[data-type="file"] { border-left: 5px solid var(--success); }
+.resource-card[data-type="link"] { border-left: 5px solid var(--warning); }
+
+.resource-card h4 {
+    font-size: 1.1rem;
+    word-break: break-word;
+}
+
+.resource-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    flex-grow: 1; /* Pushes actions to the bottom */
+}
+
+.resource-card-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-card-actions .file-name {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+/* In style.css */
+
+/* --- RESOURCE CARD BUTTON FIX --- */
+
+/* This targets the div that wraps the action buttons */
+.resource-card-actions > div {
+    display: flex; /* Arrange buttons horizontally */
+    gap: 8px;      /* Add space between them */
+}
+
+/* This ensures <a> tags styled as buttons look identical to actual <button>s */
+.resource-card-actions .btn-edit,
+.resource-card-actions .btn-delete {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    line-height: 1.5;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block; /* Important for <a> tags */
+}/* In style.css */
+.linked-resources-list {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+.linked-resources-list ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+.linked-resources-list li a {
+    color: var(--primary-brand);
+    text-decoration: none;
+}
+.linked-resources-list li a:hover {
+    text-decoration: underline;
+}
+
+.resource-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 40vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--main-bg);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+
+/* In style.css, can go near the bottom */
+
+.theme-toggle {
+    background-color: var(--surface-muted);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary-brand);
+    color: var(--primary-brand);
+}
+
+/* In style.css */
+
+/* --- GAMIFICATION / BADGE STYLES --- */
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px; /* Pill shape */
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+#badge-checklist-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background-color: var(--main-bg);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* --- DRAG-AND-DROP WIDGET STYLES --- */
+
+/* Style for the placeholder element that shows where the widget will be dropped */
+.sortable-ghost {
+  opacity: 0.4;
+  background-color: #dbeafe; /* A light blue color */
+}
+
+/* Optional: Change the cursor to a grabbing hand while dragging a widget */
+.dashboard-widget:hover {
+    cursor: grab;
+}
+
+/* --- MESSAGING INTERFACE STYLES --- */
+
+/* Style for the new "Messages" button on the student card */
+.student-card .btn-messages {
+    background-color: #8e44ad; /* A distinct purple color */
+    color: white;
+}
+
+.student-card .btn-messages:hover {
+    background-color: #9b59b6;
+}
+
+/* Main container that holds the scrolling messages */
+#message-display-area {
+    height: 45vh; /* Sets a good height relative to the screen */
+    max-height: 500px; /* Prevents it from getting too tall on large screens */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 15px;
+    background-color: var(--main-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Adds space between messages */
+}
+
+/* Base style for an individual message bubble */
+.message {
+    padding: 12px 18px;
+    border-radius: 20px; /* Rounded bubbles */
+    max-width: 75%; /* Prevents bubbles from stretching full-width */
+    line-height: 1.5;
+}
+
+.message p {
+    margin: 0;
+    white-space: pre-wrap; /* Respects line breaks in the message */
+    word-wrap: break-word; /* Prevents long words from overflowing */
+}
+
+/* Style for messages sent BY THE TEACHER (right-aligned) */
+.message.sent {
+    background-color: var(--primary-brand);
+    color: white;
+    border-bottom-right-radius: 5px; /* Creates a "tail" on the bubble */
+    align-self: flex-end; /* Aligns the bubble to the right */
+}
+
+/* Style for messages received FROM THE PARENT (left-aligned) */
+.message.received {
+    background-color: var(--surface-muted);
+    color: var(--text-primary);
+    border-bottom-left-radius: 5px; /* Creates a "tail" on the bubble */
+    align-self: flex-start; /* Aligns the bubble to the left */
+}
+
+.subject-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.subject-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+#subject-list {
+    margin-top: 20px;
+}
+
+#gradebook-container{
+  margin-top: 20px;
+}
+
+#gradebook-container p{
+  margin-top: 10px;
+}
+
+/* --- REPORT DESIGNER PAGE --- */
+
+.designer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.designer-intro {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.config-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+}
+
+.config-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.grading-scale-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.grading-scale-grid .form-group input {
+    padding: 8px 12px;
+}
+
+/* Custom Radio Buttons */
+.custom-radio-group {
+    display: flex;
+    gap: 10px;
+}
+.custom-radio-group label {
+    flex-grow: 1;
+}
+.custom-radio-group input[type="radio"] {
+    display: none;
+}
+.custom-radio-group span {
+    display: block;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.custom-radio-group input[type="radio"]:checked + span {
+    background-color: var(--primary-brand);
+    border-color: var(--primary-brand);
+    color: white;
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+
+/* Custom Checkboxes */
+.custom-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.custom-checkbox input[type="checkbox"] {
+    display: none;
+}
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: var(--surface-muted);
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.custom-checkbox:hover {
+    background-color: var(--border-color);
+}
+.custom-checkbox span::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    background-color: var(--card-bg);
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.custom-checkbox input[type="checkbox"]:checked + span::before {
+    background-color: var(--primary-brand);
+    border-color: var(--primary-brand);
+    content: '✔';
+    color: white;
+    text-align: center;
+    line-height: 18px;
+}
+
+/* Preview Placeholder */
+.designer-preview {
+    position: sticky;
+    top: 20px;
+}
+.preview-placeholder {
+    width: 100%;
+    height: 500px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--surface-muted);
+}
+.preview-placeholder p {
+    font-size: 4rem;
+    margin: 0;
+}
+.preview-placeholder span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 10px;
+}
+.preview-placeholder small {
+    margin-top: 10px;
+    color: var(--text-secondary);
+}
+
+#preview-frame {
+    width: 100%;
+    height: 550px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Lesson Plans</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./images/logo.png" alt="Zenith Logo" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./index.html" class="nav-link">Dashboard</a>
+                <a href="myClassRoom.html" class="nav-link">My Classroom</a>
+                <a href="./students.html" class="nav-link">Students</a>
+                <a href="subjects.html" class="nav-link">Subjects</a>
+                <a href="./marks.html" class="nav-link">Marks</a>
+                <a href="attendance.html" class="nav-link">Attendance</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="lessons.html" class="nav-link active">Lesson Plans</a>
+                <a href="resources.html" class="nav-link">Resource Library</a>
+                <a href="report-designer.html" class="nav-link">Report Designer</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Lesson Plans</h1>
+                <button id="theme-toggle-btn" class="theme-toggle">🌙</button>
+                <button id="add-lesson-btn" class="btn btn-primary">Create New Plan</button>
+            </header>
+
+            <div class="class-selector-container">
+                <label for="lesson-class-select">Select a Classroom to View Plans</label>
+                <select id="lesson-class-select"></select>
+            </div>
+
+            <div id="lesson-list" class="lesson-list-container">
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="lesson-modal">
+        <div class="modal-content">
+            <h2 id="lesson-modal-title">Create New Lesson Plan</h2>
+            <form id="lesson-form">
+                <input type="hidden" id="lesson-id">
+                <div class="form-group">
+                    <label for="lesson-title">Title</label>
+                    <input type="text" id="lesson-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="lesson-subject">Subject</label>
+                    <input type="text" id="lesson-subject">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lesson-start-date">Start Date</label>
+                        <input type="date" id="lesson-start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lesson-end-date">End Date (Optional)</label>
+                        <input type="date" id="lesson-end-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lesson-objectives">Objectives / Learning Goals</label>
+                    <textarea id="lesson-objectives" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="lesson-notes">Teacher's Notes</label>
+                    <textarea id="lesson-notes" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+    <button type="button" class="btn btn-secondary" id="attach-resources-btn">Attach Resources</button>
+    <button type="button" class="btn btn-secondary" id="cancel-lesson-btn">Cancel</button>
+    <button type="submit" class="btn btn-primary">Save Plan</button>
+</div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="resource-picker-modal">
+        <div class="modal-content">
+            <h2>Attach Resources</h2>
+            <div id="resource-checklist" class="resource-checklist">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancel-picker-btn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirm-picker-btn">Confirm Selection</button>
+            </div>
+        </div>
+    </div>
+    <script src="theme.js"></script>
+    <script src="lessons.js"></script>
+</body>
+
+</html>
