@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchAndDisplaySubjects = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/subjects');
+            // FIX: Use relative URL
+            const response = await fetch('/api/subjects');
             const subjects = await response.json();
             displaySubjects(subjects);
         } catch (error) {
@@ -33,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addSubject = async (name) => {
         try {
-            const response = await fetch('http://localhost:5000/api/subjects', {
+            // FIX: Use relative URL
+            const response = await fetch('/api/subjects', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name }),
@@ -50,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteSubject = async (id) => {
         if (!confirm('Are you sure you want to delete this subject?')) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/subjects/${id}`, {
+            // FIX: Use relative URL
+            const response = await fetch(`/api/subjects/${id}`, {
                 method: 'DELETE',
             });
             if (!response.ok) throw new Error('Failed to delete subject');
