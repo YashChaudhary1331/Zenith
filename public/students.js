@@ -24,6 +24,7 @@ const cancelBtn = document.getElementById('cancel-btn');
 const editModal = document.getElementById('edit-student-modal');
 const editStudentForm = document.getElementById('edit-student-form');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
+const modalAiBtn = document.getElementById('modal-ai-btn');
 let currentStudentId = null;
 
 // Access Codes Modal
@@ -47,7 +48,7 @@ const closeAiModalBtn = document.getElementById('close-ai-modal-btn');
 const spinnerContainer = aiModal.querySelector('.spinner-container');
 let studentIdForAI = null;
 
-// --- FIX: Messaging Modal elements are now declared here with the others ---
+// Messaging Modal
 const messageModal = document.getElementById('message-modal');
 const messageModalTitle = document.getElementById('message-modal-title');
 const messageDisplayArea = document.getElementById('message-display-area');
@@ -111,9 +112,9 @@ const displayGroupedStudents = (classrooms) => {
                                 <div class="card-actions">
                                     <p>Created: ${new Date(student.createdAt).toLocaleDateString()}</p>
                                     <div>
+                                        <button class="btn-generate-observation" data-id="${student._id}">AI Note</button>
                                         <button class="btn-messages" data-id="${student._id}">Messages</button>
                                         <button class="btn-generate-report" data-id="${student._id}">Report</button>
-                                        
                                         <button class="btn-manage-access" data-id="${student._id}">Access</button>
                                         <button class="btn-edit" data-id="${student._id}">Edit</button>
                                         <button class="btn-delete" data-id="${student._id}">Delete</button>
@@ -228,6 +229,17 @@ const openAccessModal = (student) => {
 };
 const closeAccessModal = () => accessModal.style.display = 'none';
 
+const openAiModal = (student) => {
+    studentIdForAI = student._id;
+    aiModalTitle.textContent = `Generate AI Observation for ${student.name}`;
+    aiTextarea.value = '';
+    aiModal.style.display = 'flex';
+};
+const closeAiModal = () => {
+    aiModal.style.display = 'none';
+    spinnerContainer.style.display = 'none';
+};
+
 const openMessageModal = async (student) => {
     currentConversationStudentId = student._id;
     messageModalTitle.textContent = `Conversation with ${student.name}'s Parents`;
@@ -252,11 +264,7 @@ const closeMessageModal = () => {
 
 // --- The Main Function to Set Up All Event Listeners ---
 const setupEventListeners = () => {
-    
-    // Listen for clicks on the main "Add Student" button
     addStudentBtn.addEventListener('click', openAddModal);
-
-    // Listeners for the "Add Student" modal
     cancelBtn.addEventListener('click', closeAddModal);
     addStudentForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -271,7 +279,6 @@ const setupEventListeners = () => {
         addStudent(formData);
     });
 
-    // Listeners for the "Edit Student" modal
     cancelEditBtn.addEventListener('click', closeEditModal);
     editStudentForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -283,12 +290,22 @@ const setupEventListeners = () => {
             motherContact: document.getElementById('edit-mother-contact').value,
         };
         formData.set('parents', JSON.stringify(parents));
-        const selectedBadges = Array.from(document.querySelectorAll('#badge-checklist-container input:checked')).map(cb => cb.value);
-        formData.set('badges', JSON.stringify(selectedBadges));
+        
+        // --- THIS IS THE FIX ---
+        // Instead of stringifying the array, we append each badge individually.
+        // The backend is already set up to handle this correctly.
+        const selectedBadges = [];
+        document.querySelectorAll('#badge-checklist-container input[name="badges"]:checked').forEach(checkbox => {
+            selectedBadges.push(checkbox.value);
+        });
+        
+        // Append each selected badge to the FormData
+        selectedBadges.forEach(badge => formData.append('badges', badge));
+        // --- END OF FIX ---
+
         updateStudent(currentStudentId, formData);
     });
 
-    // --- FIX: All card button clicks are handled by this single, consolidated listener ---
     mainContent.addEventListener('click', (e) => {
         const button = e.target.closest('button');
         if (!button) return;
@@ -306,13 +323,15 @@ const setupEventListeners = () => {
             if (student) openAccessModal(student);
         } else if (button.classList.contains('btn-generate-report')) {
             window.open(`/api/reports/report-card/${studentId}`, '_blank');
-        } else if (button.classList.contains('btn-messages')) { // Logic for messages now here
+        } else if (button.classList.contains('btn-messages')) {
             const student = findStudentById(studentId);
             if (student) openMessageModal(student);
+        } else if (button.classList.contains('btn-generate-observation')) {
+            const student = findStudentById(studentId);
+            if (student) openAiModal(student);
         }
     });
 
-    // Listeners for the "Access Codes" modal
     closeAccessModalBtn.addEventListener('click', closeAccessModal);
     copyStudentCodeBtn.addEventListener('click', () => navigator.clipboard.writeText(studentCodeDisplay.textContent));
     copyParentCodeBtn.addEventListener('click', () => navigator.clipboard.writeText(parentCodeDisplay.textContent));
@@ -327,19 +346,14 @@ const setupEventListeners = () => {
                 student.parentAccessCode = newCodes.parentAccessCode;
                 openAccessModal(student);
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Could not generate codes.');
-        }
+        } catch (error) { console.error('Error:', error); alert('Could not generate codes.'); }
     });
     
-    // --- FIX: Event listeners for the message modal are now here ---
     closeMessageModalBtn.addEventListener('click', closeMessageModal);
     messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const messageText = messageInput.value.trim();
         if (!messageText || !currentConversationStudentId) return;
-
         try {
             const response = await fetch(`/api/messages/${currentConversationStudentId}`, {
                 method: 'POST',
@@ -347,12 +361,31 @@ const setupEventListeners = () => {
                 body: JSON.stringify({ messageText }),
             });
             if (!response.ok) throw new Error('Failed to send message');
-            
             messageInput.value = '';
             const student = findStudentById(currentConversationStudentId);
             if (student) openMessageModal(student);
+        } catch (error) { console.error("Error sending message:", error); }
+    });
+
+    // AI Modal Listeners
+    modalAiBtn.addEventListener('click', () => {
+        const student = findStudentById(currentStudentId);
+        if (student) openAiModal(student);
+    });
+    closeAiModalBtn.addEventListener('click', closeAiModal);
+    copyObservationBtn.addEventListener('click', () => navigator.clipboard.writeText(aiTextarea.value));
+    generateObservationBtn.addEventListener('click', async () => {
+        spinnerContainer.style.display = 'flex';
+        aiTextarea.value = '';
+        try {
+            const response = await fetch(`/api/ai/observation/${studentIdForAI}`);
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Failed to generate observation');
+            aiTextarea.value = data.observation;
         } catch (error) {
-            console.error("Error sending message:", error);
+            aiTextarea.value = `Error: ${error.message}`;
+        } finally {
+            spinnerContainer.style.display = 'none';
         }
     });
 };
@@ -361,5 +394,5 @@ const setupEventListeners = () => {
 document.addEventListener('DOMContentLoaded', () => {
     fetchAndDisplayGroupedStudents();
     populateClassroomDropdown();
-    setupEventListeners(); // This one function sets up everything
+    setupEventListeners();
 });
