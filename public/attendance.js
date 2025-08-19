@@ -6,6 +6,7 @@ const attendanceContainer = document.getElementById('attendance-list-container')
 // --- Functions ---
 const populateClassroomDropdown = async () => {
     try {
+        // FIX: Use relative URL
         const response = await fetch('/api/classrooms');
         if (!response.ok) throw new Error('Failed to fetch classrooms');
         const classrooms = await response.json();
@@ -19,7 +20,6 @@ const populateClassroomDropdown = async () => {
     } catch (error) { console.error('Error:', error); }
 };
 
-// In attendance.js, replace the entire function with this one
 const generateAttendanceList = async () => {
     const classId = classSelect.value;
     const date = dateInput.value;
@@ -29,7 +29,8 @@ const generateAttendanceList = async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/students?classId=${classId}`);
+        // FIX: Use relative URL
+        const response = await fetch(`/api/students?classId=${classId}`);
         if (!response.ok) throw new Error('Failed to fetch students');
         const students = await response.json();
 
@@ -43,7 +44,6 @@ const generateAttendanceList = async () => {
                 <thead><tr><th>Student Name</th><th>Status</th></tr></thead>
                 <tbody>
                     ${students.map(student => {
-                        // THIS IS THE LINE WE ARE FIXING
                         const attendanceRecord = (student.attendance || []).find(att => new Date(att.date).toDateString() === new Date(date).toDateString());
                         const status = attendanceRecord ? attendanceRecord.status : 'Present'; // Default to Present
                         return `
@@ -82,7 +82,8 @@ const saveAttendance = async () => {
     });
 
     try {
-        const response = await fetch('http://localhost:5000/api/attendance/batch', {
+        // FIX: Use relative URL
+        const response = await fetch('/api/attendance/batch', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(recordsToSave),
