@@ -24,7 +24,6 @@ const cancelBtn = document.getElementById('cancel-btn');
 const editModal = document.getElementById('edit-student-modal');
 const editStudentForm = document.getElementById('edit-student-form');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
-const modalAiBtn = document.getElementById('modal-ai-btn');
 let currentStudentId = null;
 
 // Access Codes Modal
@@ -37,16 +36,6 @@ const closeAccessModalBtn = document.getElementById('close-access-modal-btn');
 const copyStudentCodeBtn = document.getElementById('copy-student-code-btn');
 const copyParentCodeBtn = document.getElementById('copy-parent-code-btn');
 let studentIdForAccess = null;
-
-// AI Observation Modal
-const aiModal = document.getElementById('ai-observation-modal');
-const aiModalTitle = document.getElementById('ai-modal-title');
-const aiTextarea = document.getElementById('ai-observation-textarea');
-const generateObservationBtn = document.getElementById('generate-observation-btn');
-const copyObservationBtn = document.getElementById('copy-observation-btn');
-const closeAiModalBtn = document.getElementById('close-ai-modal-btn');
-const spinnerContainer = aiModal.querySelector('.spinner-container');
-let studentIdForAI = null;
 
 // Messaging Modal
 const messageModal = document.getElementById('message-modal');
@@ -89,9 +78,12 @@ const displayGroupedStudents = (classrooms) => {
                     <h2 class="classroom-heading">${classroom.name}</h2>
                     <div class="student-list">
                     ${classroom.students.map(student => {
+                        // --- FIX FOR DUPLICATE BADGES ---
+                        // Use a Set to ensure we only have unique badge IDs before mapping
+                        const uniqueBadges = [...new Set(student.badges)];
                         const badgesHTML = (student.badges && student.badges.length > 0) ? `
                             <div class="badge-list">
-                                ${student.badges.map(badgeId => {
+                                ${uniqueBadges.map(badgeId => {
                                     const badge = availableBadges.find(b => b.id === badgeId);
                                     return badge ? `<span class="badge" style="background-color: ${badge.color};">${badge.icon} ${badge.name}</span>` : '';
                                 }).join('')}
@@ -112,7 +104,6 @@ const displayGroupedStudents = (classrooms) => {
                                 <div class="card-actions">
                                     <p>Created: ${new Date(student.createdAt).toLocaleDateString()}</p>
                                     <div>
-                                        <button class="btn-generate-observation" data-id="${student._id}">AI Note</button>
                                         <button class="btn-messages" data-id="${student._id}">Messages</button>
                                         <button class="btn-generate-report" data-id="${student._id}">Report</button>
                                         <button class="btn-manage-access" data-id="${student._id}">Access</button>
@@ -229,17 +220,6 @@ const openAccessModal = (student) => {
 };
 const closeAccessModal = () => accessModal.style.display = 'none';
 
-const openAiModal = (student) => {
-    studentIdForAI = student._id;
-    aiModalTitle.textContent = `Generate AI Observation for ${student.name}`;
-    aiTextarea.value = '';
-    aiModal.style.display = 'flex';
-};
-const closeAiModal = () => {
-    aiModal.style.display = 'none';
-    spinnerContainer.style.display = 'none';
-};
-
 const openMessageModal = async (student) => {
     currentConversationStudentId = student._id;
     messageModalTitle.textContent = `Conversation with ${student.name}'s Parents`;
@@ -291,17 +271,12 @@ const setupEventListeners = () => {
         };
         formData.set('parents', JSON.stringify(parents));
         
-        // --- THIS IS THE FIX ---
-        // Instead of stringifying the array, we append each badge individually.
-        // The backend is already set up to handle this correctly.
         const selectedBadges = [];
         document.querySelectorAll('#badge-checklist-container input[name="badges"]:checked').forEach(checkbox => {
             selectedBadges.push(checkbox.value);
         });
         
-        // Append each selected badge to the FormData
         selectedBadges.forEach(badge => formData.append('badges', badge));
-        // --- END OF FIX ---
 
         updateStudent(currentStudentId, formData);
     });
@@ -326,9 +301,6 @@ const setupEventListeners = () => {
         } else if (button.classList.contains('btn-messages')) {
             const student = findStudentById(studentId);
             if (student) openMessageModal(student);
-        } else if (button.classList.contains('btn-generate-observation')) {
-            const student = findStudentById(studentId);
-            if (student) openAiModal(student);
         }
     });
 
@@ -365,28 +337,6 @@ const setupEventListeners = () => {
             const student = findStudentById(currentConversationStudentId);
             if (student) openMessageModal(student);
         } catch (error) { console.error("Error sending message:", error); }
-    });
-
-    // AI Modal Listeners
-    modalAiBtn.addEventListener('click', () => {
-        const student = findStudentById(currentStudentId);
-        if (student) openAiModal(student);
-    });
-    closeAiModalBtn.addEventListener('click', closeAiModal);
-    copyObservationBtn.addEventListener('click', () => navigator.clipboard.writeText(aiTextarea.value));
-    generateObservationBtn.addEventListener('click', async () => {
-        spinnerContainer.style.display = 'flex';
-        aiTextarea.value = '';
-        try {
-            const response = await fetch(`/api/ai/observation/${studentIdForAI}`);
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Failed to generate observation');
-            aiTextarea.value = data.observation;
-        } catch (error) {
-            aiTextarea.value = `Error: ${error.message}`;
-        } finally {
-            spinnerContainer.style.display = 'none';
-        }
     });
 };
 
