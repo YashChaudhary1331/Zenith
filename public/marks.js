@@ -36,7 +36,7 @@ const populateClassroomDropdown = async () => {
 // NEW: Function to populate the new subject dropdown
 const populateSubjectMarksDropdown = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/subjects');
+        const response = await fetch('/api/subjects');
         if (!response.ok) throw new Error('Failed to fetch subjects');
         const subjects = await response.json();
         
@@ -91,7 +91,7 @@ const fetchAndDisplayAssignments = async () => {
     subjectMarksSection.style.display = 'block';
 
     try {
-        const response = await fetch(`http://localhost:5000/api/assignments?classId=${currentClassId}`);
+        const response = await fetch(`/api/assignments?classId=${currentClassId}`);
         if (!response.ok) throw new Error('Failed to fetch assignments');
         const assignments = await response.json();
         displayAssignments(assignments);
@@ -100,7 +100,7 @@ const fetchAndDisplayAssignments = async () => {
 
 const createAssignment = async (assignmentData) => {
     try {
-        const response = await fetch('http://localhost:5000/api/assignments', {
+        const response = await fetch('/api/assignments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(assignmentData),
@@ -112,7 +112,7 @@ const createAssignment = async (assignmentData) => {
 
 const deleteAssignment = async (assignmentId) => {
     try {
-        const response = await fetch(`http://localhost:5000/api/assignments/${assignmentId}`, { method: 'DELETE' });
+        const response = await fetch(`/api/assignments/${assignmentId}`, { method: 'DELETE' });
         if (!response.ok) throw new Error('Failed to delete assignment');
         fetchAndDisplayAssignments();
     } catch (error) { 
@@ -123,7 +123,7 @@ const deleteAssignment = async (assignmentId) => {
 
 const saveAssignmentMarks = async (assignmentId, marks) => {
     try {
-        const response = await fetch(`http://localhost:5000/api/assignments/${assignmentId}/marks`, {
+        const response = await fetch(`/api/assignments/${assignmentId}/marks`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ marks }),
@@ -142,7 +142,7 @@ const saveAssignmentMarks = async (assignmentId, marks) => {
 const generateGradebook = async (assignment) => {
     gradebookContainer.innerHTML = '<p>Loading students...</p>';
     try {
-        const response = await fetch(`http://localhost:5000/api/students?classId=${assignment.classroomId}`);
+        const response = await fetch(`/api/students?classId=${assignment.classroomId}`);
         if (!response.ok) throw new Error('Failed to fetch students');
         const students = await response.json();
 
@@ -209,7 +209,7 @@ const generateSubjectGradebook = async (subjectName) => {
 
         try {
             // Find or create the monthly grades assignment
-            const assignmentsResponse = await fetch(`http://localhost:5000/api/assignments?classId=${currentClassId}`);
+            const assignmentsResponse = await fetch(`/api/assignments?classId=${currentClassId}`);
             const allAssignments = await assignmentsResponse.json();
             let subjectAssignment = allAssignments.find(a => a.subject === subjectName && a.assignmentName.startsWith('Monthly Grades'));
 
@@ -220,7 +220,7 @@ const generateSubjectGradebook = async (subjectName) => {
                     maxScore: parseInt(maxScore),
                     classroomId: currentClassId,
                 };
-                const createResponse = await fetch('http://localhost:5000/api/assignments', {
+                const createResponse = await fetch('/api/assignments', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(assignmentData),
@@ -229,7 +229,7 @@ const generateSubjectGradebook = async (subjectName) => {
             } else {
                 // If it exists, update its max score if necessary
                 if (subjectAssignment.maxScore !== parseInt(maxScore)) {
-                    await fetch(`http://localhost:5000/api/assignments/${subjectAssignment._id}`, {
+                    await fetch(`/api/assignments/${subjectAssignment._id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ maxScore: parseInt(maxScore) }),
@@ -239,7 +239,7 @@ const generateSubjectGradebook = async (subjectName) => {
             }
             
             // Now, get the students and generate the gradebook form
-            const studentsResponse = await fetch(`http://localhost:5000/api/students?classId=${currentClassId}`);
+            const studentsResponse = await fetch(`/api/students?classId=${currentClassId}`);
             if (!studentsResponse.ok) throw new Error('Failed to fetch students');
             const students = await studentsResponse.json();
 
